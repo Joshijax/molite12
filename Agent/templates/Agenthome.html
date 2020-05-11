@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOlite</title>
+    {% load static %}
+
+    <link rel="icon" href="{% static 'molite.png' %}" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
+    
+ 
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  
+
+    <!-- Latest compiled JavaScript -->
+    <script>
+
+
+
+    </script>
+    <style>
+
+    html, body {
+    scroll-behavior: smooth;
+        }
+        body {
+        background: #eee;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color:#000;
+        height: 100vh;
+        padding: 0;
+        
+        }
+        nav{
+        
+        
+        
+        background-size:cover;
+        background-width: 100px;
+        background-position: absolute;
+        font-family: Arial;
+    }
+    </style>
+
+
+
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="postion: fixed !important; z-index: 12; width: 100%;">
+      <a class="navbar-brand" href="/"><img height="30" width="100" src="{% static 'molite1.jpg' %}"></a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navb">
+        <ul class="navbar-nav justify-content-center mr-auto">
+        {% if user.is_authenticated %}
+          <li><a class="nav-link" id="home" href="">Home</a></li>
+            <li><a class="nav-link" href="#">Locations</a></li>
+            <li><a class="nav-link" href="#">Vacancies</a></li>
+            <li><a class="nav-link" href="#">Info</a></li>
+            {% if request.user.profile.role == 'Agent'%}
+            <li><a class="nav-link" href="{% url 'Agent:Agent'  %}">Agent Home</a></li>
+            {% endif %}
+            <li><a class="nav-link" href="{% url 'logout'  %}">Logout</a></li>
+             
+            {% else %}
+            <li><a class="nav-link" id="home" href="">Home</a></li>
+            <li><a class="nav-link" href="#">Locations</a></li>
+            <li><a class="nav-link" href="#">Vacancies</a></li>
+            <li><a class="nav-link" href="#">Info</a></li>
+            <li><a style="cursor: pointer;" class="nav-link" id="myBtn" >Sign up or Login </a></li>
+            <li><a class="nav-link" href="#">About us</a></li>
+            {% endif %}
+        </ul>
+        <form action="/search" class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" required type="search" autocomplete="off"  name="q" aria-label="Search" placeholder="Search for vacancies...">
+          <button class="btnn" style="" type="button"><i style="color: #000; " class="fa fa-search" aria-hidden="true"></i></button>
+        </form>
+      </div>
+    </nav>
+<div class="home-container" id="content">
+
+
+    <div class="side-bar">
+        
+        <div   style="background: #343a40; pointer-events: none;" class="side-item" ><a disabled href="{% url 'Agent:Agenthome'  %}" class="tablink" ><i style="font-size: 50px; position: block;" class="fa fa-user-circle-o" aria-hidden="true"></i> Home</a></div>
+        <div class="side-item"><a href="{% url 'Agent:Agentupdate'  %}" class="tablink"  ><i style="font-size: 50px;" class="fa fa-inbox" aria-hidden="true"></i>Profile</a></div>
+        <div  class="side-item"><a href="{% url 'Agent:Agentupload'  %}" class="tablink" ><i style="font-size: 50px;" class="fa fa-cloud-upload" aria-hidden="true"></i>Listings</a></div>
+        {% comment %} <div onclick="openPage('News', this, '#343a40')" class="side-item"><a href="#" class="tablink"  ><i style="font-size: 50px;" class="fa fa-cog" aria-hidden="true"></i>Settings</a></div> {% endcomment %}
+
+        
+    </div>
+
+
+
+      <div id="Navigation" class="main-content">
+        <div class="ajaxProgress" style="display:none; position: absolute; top: 50%; left: 50%; margin: -50px 0px 0px -50px;">
+                <img src="{% static 'ajax-loader.gif' %}" ></div>
+                <div id="Navigation_content">
+                <a id="back" style="cursor: pointer;">back</a>
+                    <h1>No activity yet</h1>
+                </div>
+        </div>
+        <br>
+      
+      </div>
+
+      
+</div>
+
+
+<script src="{% static 'scripts.js' %}"></script>
+<script>
+var input = document.getElementById("id_file");
+var file_input_label = document.getElementById("file_input_label");
+
+
+function input_filename() {
+
+  file_input_label.innerText = input.files[0].name;
+
+
+}
+</script>
+
+
+
+
+  </body>
+  </html>
+
+
+

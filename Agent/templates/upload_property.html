@@ -1,0 +1,34 @@
+<a id="back" style="cursor: pointer;">back</a>
+<form id="upload_Form" action="">
+        {% csrf_token %}
+        <div class="frame">
+	      
+		
+
+        <div class="dropzone">
+          <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
+          {{ form.file }}
+        </div>
+        <div class="title">
+          Drop file to upload
+        </div>
+        <div id="file_input_label"></div>
+
+        {{ form.property_Name }}<br><br>
+        {{ form.property_Location }}<br><br>
+        {{ form.property_Type }}<br><br>
+        {{ form.property_Description }}<br><br>
+        {{ form.prize }}
+        <br>
+        <button class="btn btn-primary" type="submit" id="upload_btn" onclick="upload()">UPLOAD Property</button>
+                <br>
+               
+
+                <button class="btn btn-primary d-none" id="loading_btn" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Uploading...
+          </button>
+
+
+      
+    </form>

@@ -1,0 +1,528 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOlite</title>
+    {% load static %}
+
+    <link rel="icon" href="{% static 'molite.png' %}" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    
+    
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    
+
+ 
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  
+
+    <!-- Latest compiled JavaScript -->
+    <script>
+
+
+
+    </script>
+    <style>
+
+    html, body {
+    scroll-behavior: smooth;
+        }
+        body {
+        background: #eee;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color:#000;
+        height: 100vh;
+        padding: 0;
+        
+        }
+        nav{
+        
+        
+        
+        background-size:cover;
+        background-width: 100px;
+        background-position: absolute;
+        font-family: Arial;
+    }
+
+@media screen and (min-width: 1025px) {
+    .profile-view {
+        display: -webkit-box;
+    }
+}
+#more:hover{
+  color: #7EC0EE;
+}
+
+
+
+    </style>
+
+
+
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="postion: fixed !important; z-index: 12; width: 100%;">
+      <a class="navbar-brand" href="/"><img height="30" width="100" src="{% static 'molite1.jpg' %}"></a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navb">
+        <ul class="navbar-nav justify-content-center mr-auto">
+        {% if user.is_authenticated %}
+          <li><a class="nav-link" id="home" href="">Home</a></li>
+            <li><a class="nav-link" href="#">Locations</a></li>
+            <li><a class="nav-link" href="#">Vacancies</a></li>
+            <li><a class="nav-link" href="#">Info</a></li>
+            {% if request.user.profile.role == 'Agent'%}
+            <li><a class="nav-link" href="{% url 'Agent:Agent'  %}">Agent Home</a></li>
+            {% endif %}
+            <li><a class="nav-link" href="{% url 'logout'  %}">Logout</a></li>
+             
+            {% else %}
+            <li><a class="nav-link" id="home" href="">Home</a></li>
+            <li><a class="nav-link" href="#">Locations</a></li>
+            <li><a class="nav-link" href="#">Vacancies</a></li>
+            <li><a class="nav-link" href="#">Info</a></li>
+            <li><a style="cursor: pointer;" class="nav-link" id="myBtn" >Sign up or Login </a></li>
+            <li><a class="nav-link" href="#">About us</a></li>
+            {% endif %}
+        </ul>
+        <form action="/search" class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" required type="search" autocomplete="off"  name="q" aria-label="Search" placeholder="Search for vacancies...">
+          <button class="btnn" style="" type="button"><i style="color: #000; " class="fa fa-search" aria-hidden="true"></i></button>
+        </form>
+      </div>
+    </nav>
+
+
+        {% for message in messages %}
+    <div {% if message.tags %} class="alert alert-{{ message.tags }}  alert-dismissible fade show"{% endif %} role="alert">
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+<div class="home-container" id="content">
+
+
+    <div class="side-bar">
+        
+        <div   class="side-item" ><a href="{% url 'Agent:Agenthome'  %}" class="tablink" ><i style="font-size: 50px; position: block;" class="fa fa-user-circle-o" aria-hidden="true"></i> Home</a></div>
+        <div style="background: #343a40; pointer-events: none;" class="side-item"><a disabled href="{% url 'Agent:Agentupdate'  %}" class="tablink"  ><i style="font-size: 50px;" class="fa fa-inbox" aria-hidden="true"></i>Profile</a></div>
+        <div   class="side-item"><a  href="{% url 'Agent:Agentupload'  %}" class="tablink" ><i style="font-size: 50px;" class="fa fa-cloud-upload" aria-hidden="true"></i>Listings</a></div>
+        {% comment %} <div onclick="openPage('News', this, '#343a40')" class="side-item"><a href="#" class="tablink"  ><i style="font-size: 50px;" class="fa fa-cog" aria-hidden="true"></i>Settings</a></div> {% endcomment %}
+
+        
+    </div>
+
+
+
+      <div id="Navigation" class="main-content">
+        <div class="ajaxProgress" style="display:none; position: absolute; top: 50%; left: 50%; margin: -50px 0px 0px -50px;">
+                <img src="{% static 'ajax-loader.gif' %}" ></div>
+                <div id="Navigation_content">
+                
+
+
+                    	<div class="row">
+		<div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
+    	 <div class="well profile">
+            <div class="col-sm-12">
+                <div class="col-xs-12 col-sm-8">
+
+                    <div class="text-center bg-form">
+                            <div class="img-section">
+                                      {% comment %} <img  width="250" height="300" src="{% static 'joshh.jpg' %}" class="imgCircle" alt="" onerror="if (this.src != '{% static 'joshh.jpg' %}' && this.attribute('src') != '{% static 'joshh.jpg' %}'); this.src = '{% static 'tiger.jpg' %}';"> {% endcomment %}
+                                       <object class="imgCircle" width="250" height="300" data="{{ request.user.profilePicx.img.url }}" type="image/jpg">
+                                          <img class="imgCircle" width="250" height="300" src="{% static 'profile2.png' %}" alt="Stack Overflow logo and icons and such">
+                                        </object>
+                                        
+
+                                        <a  id="myBtnn" style="position: absolute; top: 0%; display: flex; align-items: center; height: 100%; width: 100%;" class="dropzone">
+                                          <div style="font-size: 40px; margin-left: 42%;position: absolute;" class="upload-icon"><i class="fa fa-camera"></i></div>
+                                          <form>
+                                          
+                                          </form>
+                                        </a>
+                                        
+                            </div>
+                                
+                        </div>
+                    <h2>{{tests.first_name}} {{ tests.last_name}}</h2>
+                    <p><strong>Businness Name: </strong>{{ request.user.profile.Business_Name}}</p>
+                    <p><strong>About: </strong> {{ request.user.profile.About}} </p>
+                    <p><strong>Employement Status: <span class="tags"> {{ request.user.profile.Employment_status}}</span>  </p>
+                    <p><strong>Phone: </strong>{{ request.user.profile.phone}}</p>
+                    <p><strong>Whatsapp Phone: </strong>{{ request.user.profile.whatapp_number}}</p>
+                </div>             
+                <div class="col-xs-12 col-sm-4 text-center">
+                    <figure>
+                        <img src="http://www.localcrimenews.com/wp-content/uploads/2013/07/default-user-icon-profile.png" alt="" class="img-circle img-responsive">
+                        <figcaption style="width: 140px;" class="ratings">
+                            <p>Ratings
+                            
+                                <span class="fa fa-star-o"></span>
+                            
+                            
+                                <span class="fa fa-star-o"></span>
+                            
+                            
+                                <span class="fa fa-star-o"></span>
+                            
+                            
+                                <span class="fa fa-star-o"></span>
+                           
+                            
+                                 <span class="fa fa-star-o"></span>
+                            
+                            </p>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>            
+            <div class="col-xs-12 divider text-center profile-view">
+                <div class="col-xs-4 col-sm-4 emphasis">
+                    <h2><strong> {{listing|length}} </strong></h2>                    
+                    <p><small>Listings</small></p>
+                    <a href="{% url 'Agent:Agentupload'  %}" style='color: white;' class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span>View Listings</a>
+                </div>
+                <div class="col-xs-4 col-sm-4 emphasis">
+                    <h2><strong style="opacity: 0;">{{request.user.id}}</strong></h2>                    
+                    <p><small style="opacity: 0;">Following</small></p>
+                    <button id="myBtn" class="btn btn-info btn-block"><span class="fa fa-user"></span> Edit Profile </button>
+                </div>
+                <div class="col-xs-4 col-sm-4 emphasis">
+                    <h2><strong style="opacity: 0;">43</strong></h2>                    
+                    <p><small style="opacity: 0;">Snippets</small></p>
+                    <div class="btn-group dropup btn-block">
+                      <button type="button" class="btn btn-primary"><span class="fa fa-gear"></span> Options </button>
+                      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                      </button>
+                      <ul style="padding: 10px;" class="dropdown-menu text-left" role="menu">
+                        <li><a href="#"><span class="fa fa-envelope pull-right"></span> Send an email </a></li>
+                        <li><a href="#"><span class="fa fa-list pull-right"></span> Add or remove from a list  </a></li>
+                        <li class="divider"></li>
+                        <li><a href="#"><span class="fa fa-warning pull-right"></span>Report this user for spam</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#" class="btn disabled" role="button"> Unfollow </a></li>
+                      </ul>
+                    </div>
+                </div>
+            </div>
+    	 </div>                 
+		</div>
+	</div>
+</div>
+                </div>
+        </div>
+        <br>
+      
+      </div>
+
+      
+</div>
+
+
+<div  id="myModal" class="modall">
+
+      <div style="background: #343a40;" class="modall-content" id="modall-content">
+              <span class="close">&times;</span>
+                <h1 class="text-center color">Edit Profile Snippet</h1>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="custom-form">
+                        <div class="text-center bg-form">
+                            <div class="img-section">
+                                      <img width="200" height="200" src="{{ request.user.profilePicx.img.url }}" class="imgCircle" alt="Profile picture">
+                                      <span class="fake-icon-edit" id="PicUpload" style="color: #ffffff;"><span class="glyphicon glyphicon-camera camera"></span></span>
+                                        <div class="col-lg-12">
+                                          <h4  id="edit" class="text-right col-lg-12"><span class="glyphicon glyphicon-edit"></span> Edit Profile</h4>
+                                          
+                                        </div>
+                            </div>
+                                
+                        </div>
+
+                                <form id="Update">
+                                {% csrf_token %}
+                                 <div class="col-lg-12 col-md-12">
+                                  <div style="width: 100%;"></div>
+                              </div>
+                              <div class="col-lg-12 col-md-12">
+                                  <label style="width: 100%; opacity: 0;"> About</label>
+                                  <textarea class="form-control form-input" rows="4" cols="50" placeholder="About your self"  id="About" value="">{{ request.user.profile.About}}</textarea>
+                                  
+                              </div>
+                              <div class="col-lg-12 col-md-12">
+                                  <input type="tel" class="form-control form-input" value="{{ request.user.profile.phone}}" placeholder="Phone Number"  id="Phone">
+                                  <span class="glyphicon glyphicon-envelope input-place"></span>
+                              </div>
+                              <div class="col-lg-12 col-md-12">
+                                  <input type="tel" class="form-control form-input" value="{{ request.user.profile.whatapp_number}}" placeholder="Whatapp Phone Number"  id="Whatsapp_phone">
+                                  <span class="glyphicon glyphicon-envelope input-place"></span>
+                              </div>
+                              <div id="more" style="text-align: center; cursor:pointer; color: blue;">  <h3>more <i class="fa fa-plus"></i><h3> </div>
+                              <div id="continue" style="display: none;">
+                              
+                              
+                              <div class="col-lg-12 col-md-12">
+                                  <input style="color: black;" type="text" class="form-control form-input" value="{{ request.user.profile.Business_Name}}" placeholder="Business Name"  id="Business_name">
+                                  <span class="glyphicon glyphicon-map-marker input-place"></span>
+                              </div>
+
+                              <div class="col-lg-12 col-md-12">
+                                  
+                                  <select id=Employment_stat class="form-control form-input">
+                                    <option value="{{ request.user.profile.Employment_status}}">Employement Status</option>
+                                      <option value="Employed">Employed</option>
+                                      <option value="Unemployed">Unemployed</option>
+                                      <option value="Student">Student</option>
+                                  </select>
+                              </div>
+
+                              </div>
+                              
+                              <div class="col-lg-12 col-md-12 text-center">
+                                  <button type="submit" class="btn btn-info btn-lg custom-btn" id="submit" ><span class="glyphicon glyphicon-save"></span> Save</button>
+                              </div>
+                              <div class="Message"></div>
+                              </form>
+                      </div>
+                  </div>
+              </div></div>
+
+
+
+<div  id="myModallll" class="modall">
+
+
+    <div class="modal-dialog">
+
+
+        <div class="modal-content" style="width:400px;">
+
+
+          <div class="modal-header">
+              <h4 class="modal-title">Upload profile picx</h4>
+
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          </div>
+
+
+              <div class="modal-body">
+                 <form method='POST' enctype="multipart/form-data" action="{% url 'Agent:UpdateProfilePicx' request.user.id %}">
+                {% csrf_token %}
+                {{ form.img }}
+          
+                <label for="photo" id="file_input_label" class="custom-file-label">select file</label>
+                <div id="alert_wrapper"></div>
+                <button class="btn btn-primary" type="submit" id="upload_btn" onclick="upload()">UPLOAD</button>
+                <br>
+               
+
+                <button class="btn btn-primary d-none" id="loading_btn" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Uploading...
+          </button>
+
+           <div style="margin-top: 20px;" id="progress" class="progress d-none">
+                  <div id="progressBar" class="progress-bar " role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                </div>
+              </form>
+              
+
+
+
+              </div>
+
+
+
+         
+
+
+        </div>
+
+
+    </div>
+
+  </div>
+</div>
+<script src="{% static 'scripts.js' %}"></script>
+          
+              
+  
+
+
+<script>
+var input = document.getElementById("id_img");
+var file_input_label = document.getElementById("file_input_label");
+
+
+function input_filename() {
+
+  file_input_label.innerText = input.files[0].name;
+
+
+}
+</script>
+<script>
+
+    $(document).on('submit', '#upload_Formm', function(e){
+          e.preventDefault();
+          
+          var data = new FormData($(this));
+        data.append("img", $("#id_img")[0].files[0]);
+          
+          $(".progress").removeClass("d-none");
+          $.ajax({
+
+            xhr : function(){
+              var xhr = new window.XMLHttpRequest();
+              xhr.upload.addEventListener('progress', function( e ) {
+                if ( e.lengthComputable ) {
+                  
+
+                  var percent = Math.round((e.loaded/e.total)*100);
+
+                  $('#progressBar').attr('aria-valuenow', percent).css('width', percent + '%').text(percent + '%');
+                }
+
+              });
+              return xhr;
+            },
+
+
+            type: 'POST',
+            url: '{% url 'Agent:UpdateProfilePicx' request.user.id %}',
+            data:$('input[name=main_photo]').val(),
+            processData:false,
+            contentType:false,
+            
+           
+            
+            success:function(data){
+               window.location.reload();
+             alert('upload success');
+            },
+            error: function() {
+               window.location.reload();
+            alert("There was an error. Try again please!");
+            }
+          });
+        });
+
+
+    $(document).ready(function(){
+        $("#myForm :input").prop("disabled", false);
+    });
+
+$("#more").click(function(){
+      $('#more').hide()
+  $('#continue').show()
+});
+
+$("#myBtn").click(function(){
+      $('#myModal').show()
+  
+});
+
+
+
+$(".close").click(function(){
+      $('#myModal').hide()
+  
+});
+
+
+$(window).click(function(e) {
+    var target = $( event.target );
+    if ( target.is( "#myModal" ) ) {
+    $('#myModal').hide();
+  }
+
+});
+
+
+
+
+    $(document).on('submit', '#Update', function(e){
+              e.preventDefault();
+              
+
+              
+             
+            
+              $.ajax({
+
+                type: 'POST',
+                url: '{% url 'Agent:UpdateProfile' request.user.id %}',
+                data:{
+                  about: $('#About').val(),
+                  phone:$('#Phone').val(),
+                  whatsapp_num:$('#Whatsapp_phone').val(),
+                  business_name:$('#Business_name').val(),
+                  employment_stat:$('#Employment_stat').val(),
+                  csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                },
+                cache: false,
+               
+                
+              
+                
+                success:function(response){
+
+                  $('#Message').html('Profile Uploaded');
+                  window.location.reload();
+                  
+                
+                },
+                error: function(data) {
+                  $('#Notifications').html(data.message).css('color', 'red');
+                
+                }
+              });
+            });
+
+</script>
+
+
+
+
+
+
+  </body>
+
+  
+  </html>
+
+
+
+
+
+
+

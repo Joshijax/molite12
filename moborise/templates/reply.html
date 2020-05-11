@@ -1,0 +1,98 @@
+<ul class="commentList">
+<button id='back' style="padding: 10px; width: 100px; border-radius: 10px; border: none;">Back</button>
+                    {% for comment in comment %}
+
+                        <li>
+                            <div class="commenterImage">
+                              <img src="http://placekitten.com/50/50" />
+                            </div>
+                            <div class="commentText">
+                            
+                                <p class=""><h5>{{ comment.text}}</h5> </p>  <span class="date sub-text">{{ comment.time}}</span>
+
+                            </div>
+                        </li>
+                        {% for reply in comment.reply.all %}
+                        <li style="margin-left: 20px;">
+                            <div class="commenterImage">
+                              <img src="http://placekitten.com/50/50" />
+                            </div>
+                            <div class="commentText">
+                            
+                                <p class=""><b style="font-size: 15px;">{{ reply.Username }} </b>{{ reply.reply}} </p>  <span class="date sub-text">{{ comment.time}}</span>
+
+                            </div>
+                        </li>
+                        {% endfor %}
+                        <script>
+                                  $("#back").click(function(e){
+                                      
+                                      window.location.reload();
+
+                                }); 
+
+                                $(document).on('submit', '#replybox', function(e){
+              e.preventDefault();
+
+              const monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+             var comment = $('#replys').val();
+
+            var dt = new Date($.now());
+            var hours = dt.getHours();
+            if (hours >= 12) {
+                  strampm= " PM";
+              } else {
+                  strampm= " AM";
+              }
+              hours = hours % 12;
+              if (hours == 0) {
+                  hours = 12;
+              }
+            var time = (monthNames[dt.getMonth()])  + " " 
+                + dt.getDate() + " ,"
+                + dt.getFullYear() + " ,"  
+                + hours + ":"  
+                + dt.getMinutes() + ":" 
+                + dt.getSeconds() + strampm;
+
+              
+              $("#replybox")[0].reset();
+              $.ajax({
+
+                type: 'POST',
+                url: '{% url 'send_reply' comment.id comment.author_id %}',
+                data:{
+                  comment: comment,
+                  time: time,
+                },
+                cache: false,
+                
+              
+                
+                success:function(response){
+                
+                  
+                  $('.commentList').append(response.post_html)
+                  
+                
+                },
+                error: function(data) {
+                  $('#Notifications').html(data.message).css('color', 'red');
+                
+                }
+              });
+            }); 
+
+
+                        </script>
+                    {% endfor %}
+                      </ul>
+                      <form id="replybox" class="form-inline" role="form">
+                        <div class="form-group">
+                            <input autocomplete='off' style="width: 100%;" id="replys" class="form-control" type="text" placeholder="Your reply" />
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-default">Add</button>
+                        </div>
+                    </form>
+                    

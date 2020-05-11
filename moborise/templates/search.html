@@ -1,0 +1,172 @@
+ <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOlite</title>
+{% load static %}
+
+    <link rel="icon" href="{% static 'molite.png' %}" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
+    
+    
+ 
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  
+
+<!-- Latest compiled JavaScript -->
+
+<style>
+
+ html, body {
+
+    }
+    body {
+      background: #eee;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color:#000;
+      height: 100vh;
+      padding: 0;
+      
+    }
+.swiper-container {
+      width: 100%;
+      height: 100%;
+    }
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+    margin-right: 15px;
+  width:100%;
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+    nav{
+	
+	
+	background: url(static/molite.png);
+	background-size:cover;
+	background-width: 100px;
+	background-position: absolute;
+	font-family: Arial;
+}
+
+
+
+  </style>
+
+
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="">
+  <a class="navbar-brand" href="/"><img height="30" width="100" src="{% static 'molite1.jpg' %}"></a>
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navb">
+    <ul class="navbar-nav justify-content-center mr-auto">
+      <li><a class="nav-link" href="#">Home</a></li>
+        <li><a class="nav-link" href="#">Locations</a></li>
+        <li><a class="nav-link" href="#">Vacancies</a></li>
+        <li><a class="nav-link" href="#">Info</a></li>
+        <li><a class="nav-link" class="nav-link" href="#">Sign up or Login </a></li>
+        <li><a class="nav-link" href="#">About us</a></li>
+    </ul>
+    <form action='/search' class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" required type="search" autocomplete="off"  name="q" aria-label="Search" placeholder="Search for vacancies...">
+      <button class="btn btn-success my-2 my-sm-0" style="background: #000;" type="button">Search</button>
+    </form>
+  </div>
+</nav>
+<br>
+
+{% if messages %}
+
+    {% for message in messages %}
+    <div {% if message.tags %} class="alert alert-{{ message.tags }}  alert-dismissible fade show"{% endif %} role="alert">
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+
+{% endif %}
+
+
+
+    <div class="container">
+
+            <div class="row">
+                
+                
+                {% for property in search %}
+
+<div class="col-lg-3 col-md-3 col-sm-6">
+                    <div class="card mb-4">
+                        <a href="">
+                            <div class="card-img-top"
+                                ><img src="{{media_url}}{{property.property_image}}" style=" height:150px;width:100% "></div>
+                        </a>
+                        <div class="card-body">
+                            <a style="text-size:10px; color: black;" href="javascript:void();">{{property.location}}
+                            <br>
+                            Address: {{property.address}}</a>
+                            <br>
+                            <span class="text-warning">Not verified</span>
+                        </div>
+                    </div>
+                    <!-- /.card -->
+          
+</div>                
+           {% endfor %}
+                
+            </div>
+            <!-- /.row -->
+
+    </div>
+
+
+
+
+
+</body>
+
+
+
+
+
+</html>

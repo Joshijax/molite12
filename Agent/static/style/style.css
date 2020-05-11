@@ -1,0 +1,312 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:700,300);
+*,
+::after,
+::before {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  margin: 0;
+}
+
+.label-advert {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 350px;
+  background: url("/static/house.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.label-advert .button1 {
+  margin-right: 20px;
+  padding: 10px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: ridge;
+  color: #ffffff;
+  height: 50px;
+  cursor: pointer;
+  font-weight: 10px;
+  font-size: 20px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.label-advert .button1:hover {
+  background-color: #343a40 !important;
+}
+
+.label-advert .button2 {
+  margin-right: 20px;
+  font-weight: 10px;
+  font-size: 20px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  text-align: center;
+  height: 50px;
+  float: right;
+  text-align: left;
+  padding: 5px;
+  background-color: transparent;
+  border: ridge;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.label-advert .button2:hover {
+  background-color: #343a40 !important;
+}
+
+.navbar-nav .nav-link {
+  color: #000000;
+}
+
+.csclogo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: absolute;
+  top: -50px;
+  left: calc(50% - 50px);
+}
+
+.modall {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: black;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modall-content {
+  background-color: #000000;
+  margin: 15% auto;
+  /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%;
+  width: 320px;
+  /* Could be more or less, depending on screen size */
+}
+
+.modall-content h1 {
+  color: #ffffff;
+  margin: 0;
+  padding: 0 0 20px;
+  text-align: center;
+  font-size: 22px;
+}
+
+.modall-content input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.modall-content input[type="text"],
+.modall-content input[type="password"],
+.modall-content input[type="email"] {
+  border: none;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+  outline: none;
+  height: 40px;
+  color: #FFF;
+  font-size: 16px;
+}
+
+.modall-content input[type="submit"] {
+  border: none;
+  outline: none;
+  height: 40px;
+  background: #fb2525;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 20px;
+}
+
+.modall-content input[type="submit"]:hover {
+  cursor: pointer;
+  background: #ffc107;
+  color: #000;
+}
+
+.modall-content a {
+  text-decoration: none;
+  font-size: 12px;
+  line-height: 20px;
+  color: darkgrey;
+}
+
+.modall-content a:hover {
+  color: #ffc107;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.view-port {
+  width: 100%;
+  height: 100vh;
+  background-color: #ffffff;
+  padding: 30px 50px 0 50px;
+}
+
+.view-port .image-port {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-bottom: 30px;
+}
+
+.view-port .image-port img {
+  height: 400px;
+  width: 100%;
+}
+
+.frame {
+  position: absolute;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  top: 20%;
+  bottom: 20%;
+  left: 40px;
+  right: 40px;
+  width: 100%;
+  height: 100vh;
+  border-radius: 2px;
+  -webkit-box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.1);
+          box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background: -webkit-gradient(linear, left bottom, right top, from(darkmagenta), to(hotpink));
+  background: linear-gradient(to top right, darkmagenta 0%, hotpink 100%);
+  color: #333;
+  font-family: "Open Sans", Helvetica, sans-serif;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 300px;
+  height: 260px;
+  border-radius: 3px;
+  -webkit-box-shadow: 8px 10px 15px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: 8px 10px 15px 0 rgba(0, 0, 0, 0.2);
+  background: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.title {
+  width: 100%;
+  height: 50px;
+  border-bottom: 1px solid #999;
+  text-align: center;
+}
+
+h1 {
+  font-size: 16px;
+  font-weight: 300;
+  color: #666;
+}
+
+.dropzone {
+  width: 100px;
+  height: 80px;
+  border: 1px dashed #999;
+  border-radius: 3px;
+  text-align: center;
+}
+
+.upload-icon {
+  margin: 25px 2px 2px 2px;
+}
+
+.upload-input {
+  position: relative;
+  top: -62px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.btn {
+  display: block;
+  width: 140px;
+  height: 40px;
+  background: darkmagenta;
+  color: #fff;
+  border-radius: 3px;
+  border: 0;
+  -webkit-box-shadow: 0 3px 0 0 hotpink;
+          box-shadow: 0 3px 0 0 hotpink;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  font-size: 14px;
+}
+
+.btn:hover {
+  background: rebeccapurple;
+  -webkit-box-shadow: 0 3px 0 0 deeppink;
+          box-shadow: 0 3px 0 0 deeppink;
+}
+/*# sourceMappingURL=style.css.map */

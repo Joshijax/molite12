@@ -1,0 +1,61 @@
+<ul class="commentList">
+                {% for comment in comment %}
+
+                        <li>
+                            <div class="commenterImage">
+                              <img src="http://placekitten.com/50/50" />
+                            </div>
+                            <div class="commentText">
+                            
+                                <p class="">{{ comment.text}} <a id="reply{{comment.id}}" href="" data-page="{{ comment.id }}">  reply</a></p>  <span class="date sub-text">{{ comment.time}}</span>
+
+                            </div>
+                        </li>
+                    <script>
+                        $("#reply{{comment.id}}").click(function(e){
+                            e.preventDefault();
+                            var link = $(this);
+                            var page = link.data('page');
+                          $.ajax({
+
+                                      type: 'post',
+                                      url: '{% url 'reply'  %}',
+                                    
+                                      data:{
+                                        'page': page,
+                                        
+                                      },
+                                      
+                                      success:function(response){
+
+                                        if (response.has_next){
+                                          link.data('page', page+1);
+                                        } else{
+                                          link.hide();
+                                          $('#no_more').show();
+                                        }
+
+                                
+                                        $('.actionBox').html(response)
+                                        
+                                      
+                                      },
+                                      error: function(data) {
+                                        $('#Notifications').html(data.message).css('color', 'red');
+                                      
+                                      }
+                                    });
+
+                      }); 
+
+                    </script>
+                {% endfor %}
+                      </ul>
+                    <form id="commentbox" class="form-inline" role="form">
+                        <div class="form-group">
+                            <input autocomplete='off' style="width: 100%;" id="commentss" class="form-control" type="text" placeholder="Your comments" />
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-default">Add</button>
+                        </div>
+                    </form>

@@ -1,0 +1,28 @@
+{% load static %}
+
+{% for property in tests %}
+
+    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <div  class="card mb-4">
+                            <a  href="{% url 'view_property' property.id property.username %}">
+                                <div class="card-img-top"
+                                    ><img src="{{property.file.url}}" style=" height:150px;width:100% "></div>
+                            
+                            <div  class="card-body">
+                            <span style='font-weight: 20px;'>₦{{property.price}},000</span>
+                                <br>
+                                <span  id="view{{ property.id }}"  style="text-size:10px; color: black;"><span style='font-weight: 20px;'>Location: </span>{{property.property_Location}}
+                                <br>
+                                <span style='font-weight: 20px;'>Property Name: </span>{{property.property_Name}}</span></a>
+                                <br>
+                                <span class="text-warning">Not verified</span>
+                                
+                            </div>
+                        </div>
+                        <!-- /.card -->
+              
+    </div>                
+
+    <script src="{% static 'jquery.js' %}"></script>
+
+              {% endfor %}

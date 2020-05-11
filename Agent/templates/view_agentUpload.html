@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOlite</title>
+{% load static %}
+
+    <link rel="icon" href="{% static 'molite.png' %}" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/swiper.min.css' %}">
+    
+ 
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  
+
+<!-- Latest compiled JavaScript -->
+
+<style>
+
+ html, body {
+      position: relative;
+      height: 100%;
+    }
+
+    body {
+      background: #eee;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color:#000;
+      height: 100vh;
+      padding: 0;
+      
+    }
+.swiper-container {
+      width: 100%;
+      height: 100%;
+    }
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+    margin-right: 15px;
+  width:100%;
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+    nav{
+	
+	
+	
+	background-size:cover;
+	background-width: 100px;
+	background-position: absolute;
+	font-family: Arial;
+}
+
+    .swiper-container {
+      width: 100%;
+      height: 100%;
+    }
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+
+  </style>
+
+
+
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="postion: fixed !important; z-index: 3; width: 100%;">
+      <a class="navbar-brand" href="/"><img height="30" width="100" src="{% static 'molite1.jpg' %}"></a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navb">
+        <ul class="navbar-nav justify-content-center mr-auto">
+        {% if user.is_authenticated %}
+          <li><a class="nav-link" id="home" href="">Home</a></li>
+            <li><a class="nav-link" href="#">Locations</a></li>
+            <li><a class="nav-link" href="#">Vacancies</a></li>
+            <li><a class="nav-link" href="#">Info</a></li>
+            {% if request.user.profile.role == 'Agent'%}
+            <li><a class="nav-link" href="{% url 'Agent:Agenthome'  %}">Agent Home</a></li>
+            {% endif %}
+            <li><a class="nav-link" href="{% url 'logout'  %}">Logout</a></li>
+             
+            {% else %}
+            <li><a class="nav-link" id="home" href="">Home</a></li>
+            <li><a class="nav-link" href="#">Locations</a></li>
+            <li><a class="nav-link" href="#">Vacancies</a></li>
+            <li><a class="nav-link" href="#">Info</a></li>
+            <li><a style="cursor: pointer;" class="nav-link" id="myBtn" >Sign up or Login </a></li>
+            <li><a class="nav-link" href="#">About us</a></li>
+            {% endif %}
+        </ul>
+        <form action="/search" class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" required type="search" autocomplete="off"  name="q" aria-label="Search" placeholder="Search for vacancies...">
+          <button class="btnn" style="" type="button"><i style="color: #000; " class="fa fa-search" aria-hidden="true"></i></button>
+        </form>
+      </div>
+    </nav>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 ">
+      <div style="padding: 30px 20px 20px 20px;" class="view-port">
+          <div class="image-port">
+            <div class="swiper-container">
+              <div class="swiper-wrapper">
+                  <div class="swiper-slide"><img src="{{property.file.url}}" style=" "></div>
+                  {% for img in property.picture.all %}
+                  <div class="swiper-slide"><img src="{{img.file.url}}" style=" "></div>
+                  {% endfor %}
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+          </div>
+          <div style="margin-bottom: 20px;" class = "view-info">
+            <div style="align-items: center; display: flex; margin-left: 20px;">
+            <object class="imgCircle" width="50" height="50" data="{{ person.profilePicx.img.url }}" type="image/jpg">
+                <img class="imgCircle" width="250" height="300" src="{% static 'profile2.png' %}" alt="Stack Overflow logo and icons and such">
+              </object><span style="margin: 20px; font-size: 20px;"> {{person.first_name}}  {{person.last_name}}</span></div>
+              {% if person.profile.Business_Name%}
+            <h5>Business Name : {{ person.profile.Business_Name}}</h5>
+            {% endif%}
+            <a href="tel:+62896706255135">Call {{property.agent}} at +62-896-7062-55135</a><br>
+            <span  id=""  style="text-size:10px; color: black;"><span style='font-weight: 20px; font-size: 15px;'>Location: </span>{{property.property_Location}}
+                                <br>
+                                <span style='font-weight: 20px; font-size: 15px;'>Property Name: </span>{{property.property_Name}}</span>
+                                <br>
+                                <span style='font-weight: 30px; font-size: 16px;'>Property Description: </span>{{property.property_Description}}</span>
+                                <br>
+                                <span class="text-warning">Not verified</span>
+          </div>
+                 <div class="detailBox" style="width: 100%; margin: 0; margin-bottom: 20px;">
+                <div class="titleBox">
+                  <label>Comment Box</label>
+                    <button type="button" class="close" aria-hidden="true">&times;</button>
+                </div>
+                <div class="commentBox">
+                    
+                    <p class="taskDescription">Add your comment below.</p>
+                </div>
+                <div class="actionBox">
+                    <ul class="commentList">
+                    {% for comment in comment %}
+
+                        <li>
+                            <div class="commenterImage">
+                              <img src="http://placekitten.com/50/50" />
+                            </div>
+                            <div class="commentText">
+                            
+                                <p class=""><b style="font-size: 15px;">{{ comment.author.last_name }} {{ comment.author.first_name }}  </b>{{ comment.text}} <a id="reply{{comment.id}}" href="" data-page="{{ comment.id }}">  reply ( {{ comment.reply.all|length }} )</a></p>  <span class="date sub-text">{{ comment.time}}</span>
+
+                            </div>
+                        </li>
+                        <script>
+                        $("#reply{{comment.id}}").click(function(e){
+                            e.preventDefault();
+                            var link = $(this);
+                            var page = link.data('page');
+                          $.ajax({
+
+                                      type: "POST",
+                                      url: "{% url 'reply' %}",
+                                    
+                                      data:{
+                                        'page': page,
+                                        
+                                      },
+                                      
+                                      success:function(response){
+
+                                        if (response.has_next){
+                                          link.data('page', page+1);
+                                        } else{
+                                          link.hide();
+                                          $('#no_more').show();
+                                        }
+
+                                
+                                        $('.actionBox').html(response)
+                                        
+                                      
+                                      },
+                                      error: function(data) {
+                                        $('#Notifications').html(data.message).css('color', 'red');
+                                      
+                                      }
+                                    });
+
+                      }); 
+
+                  </script>
+                    {% endfor %}
+                      </ul>
+                    <form id="commentbox" class="form-inline" role="form">
+                        <div class="form-group">
+                            <input autocomplete='off' style="width: 100%;" id="commentss" class="form-control" type="text" placeholder="Your comments" />
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-default">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <a onclick="return confirm('Are You Sure For Delete?')"  href="{% url 'Agent:delete' property.id %}">delete</a>
+  </div>
+
+<div id="myModal" class="modall">
+
+      <!-- Modal content -->
+      <div class="modall-content" id="modall-content">
+        <span class="close">&times;</span>
+        
+        
+        <h1>Login Agent</h1>
+        {% load static %}
+            <form id="LoginForm" action="{% url 'UserLogin'  %}">
+            {% csrf_token %}
+            <p>Username</p>
+              {{ form2.username }}
+              <span id='usernamee_error'></span>
+              <p>Password</p>
+              {{ form2.password }}
+              <span id='password_error'></span>
+          
+            
+              <span id='message'></span>
+              <input  id="Login"  type="submit" name="submit" value="Login">
+              <h1 id="Notifications"></h1>
+                <div class="ajaxProgress" style="display:none; margin-top: -30px; text-align:center; ">
+                    <h3>Please Wait</h3>
+                    <img src="{% static 'loading.gif' %}">
+                  </div>
+                
+            </form>
+
+            <a href="#">Lost your password</a><br>
+				    <a href="" id="signup" name="SignUp">Don't have an account ?</a>
+
+
+      </div>
+
+    </div>
+{% if user.is_authenticated %}
+
+<script>
+
+
+
+  $(document).on('submit', '#commentbox', function(e){
+              e.preventDefault();
+
+              const monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+             var comment = $('#commentss').val();
+
+            var dt = new Date($.now());
+            var hours = dt.getHours();
+            if (hours >= 12) {
+                  strampm= " PM";
+              } else {
+                  strampm= " AM";
+              }
+              hours = hours % 12;
+              if (hours == 0) {
+                  hours = 12;
+              }
+            var time = (monthNames[dt.getMonth()])  + " " 
+                + dt.getDate() + " ,"
+                + dt.getFullYear() + " ,"  
+                + hours + ":"  
+                + dt.getMinutes() + ":" 
+                + dt.getSeconds() + strampm;
+
+              
+              $("#commentbox")[0].reset();
+              $.ajax({
+
+                type: 'POST',
+                url: '{% url 'comment' property.id property.username %}',
+                data:{
+                  comment: comment,
+                  time: time,
+                },
+                cache: false,
+                
+              
+                
+                success:function(response){
+                
+                  
+                  $('.commentList').append(response.post_html)
+                  
+                
+                },
+                error: function(data) {
+                  $('#Notifications').html(data.message).css('color', 'red');
+                
+                }
+              });
+            });
+
+
+
+            
+
+
+</script>
+{% else %}
+<script>
+
+    $(document).on('submit', '#commentbox', function(e){
+              e.preventDefault();
+             $('#myModal').show()
+              
+
+            });
+
+      $("#myBtn").click(function(){
+            $('#myModal').show()
+        
+      });
+
+
+
+      $(".close").click(function(){
+            $('#myModal').hide()
+        
+      });
+
+
+      $(window).click(function(e) {
+          var target = $( event.target );
+          if ( target.is( "#myModal" ) ) {
+          $('#myModal').hide();
+        }
+
+      });
+
+
+
+
+    $('#id_password2').on('keyup', function () {
+
+      if ($('#id_password1').val() == $('#id_password2').val()) {
+        
+        $('#message').html('Matching').css('color', 'green');
+        
+        
+        
+      } else 
+        $('#message').html('Not Matching').css('color', 'red');
+      
+        
+    });
+
+
+
+
+    $(document).on('submit', '#NewUser', function(e){
+              e.preventDefault();
+              
+
+              
+              $.ajax({
+
+                type: 'POST',
+                url: '{% url 'NewUser'  %}',
+                data:{
+                  name: $('#id_first_name').val(),
+                  lastname:$('#id_last_name').val(),
+                  username:$('#id_username').val(),
+                  email:$('#id_email').val(),
+                  password:$('#id_password1').val(),
+                
+                  csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                },
+                cache: false,
+                
+              
+                
+                success:function(response){
+                  if(response['username_error']) {
+                         $("#username_error").html(response['username_error']).css('color', 'red');
+                         
+                     } 
+                     else{
+                         $("#username_error").html('');
+                         
+                     } 
+
+
+                  if(response['email_error']) {
+                         $("#email_error").html(response['email_error']).css('color', 'red');
+                         
+                     } 
+                  else{
+                         $("#email_error").html('')
+                         
+                     } 
+                  if(response['password_error']) {
+                         $("#password_error").html(response['password_error']).css('color', 'red');
+                         
+                     } 
+
+                      else{
+                         $("#password_error").html('');
+                         
+                     } 
+                     if(response['success']) {
+                         $('#submit').html('').css( 'display', 'none');
+                  $('#Notifications').html('Successful Registered <br> <a class="btn btn-success" id="login"> Login</a>').css('color', 'green'); 
+                         
+                     } 
+                  
+                  
+                  
+                
+                },
+                error: function(data) {
+                  $('#Notifications').html(data.message).css('color', 'red');
+                
+                }
+              });
+            });
+
+
+  
+    $(document).on('submit', '#LoginForm', function(e){
+              e.preventDefault();
+             
+              $('.ajaxProgress').show();
+              
+              
+              $.ajax({
+
+                type: 'POST',
+                url: '{% url 'UserLogin'  %}',
+                data:{
+                  
+                  username:$('#id_username').val(),
+                  
+                  password:$('#id_password').val(),
+                
+                  csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                },
+                
+                
+                
+              
+                
+                success:function(response){
+
+                  
+                  if(response['username_error']) {
+                          $('.ajaxProgress').hide();
+                         $("#usernamee_error").html(response['username_error']).css('color', 'red');
+                         
+                     } 
+                     else{
+                         $("#usernamee_error").html('');
+                         
+                     } 
+
+                     if(response['password_error']) {
+                       $('.ajaxProgress').hide();
+                         $("#password_error").html(response['password_error']).css('color', 'red');
+                         
+                       
+                         
+                     } 
+                     else{
+                       
+                         $("#password_error").html('').css('color', 'red');
+                         
+                     } 
+
+                     
+
+                     if(response['success']) {
+                       console.log(response)
+                       $('.ajaxProgress').hide();
+                         $('#Login').html('').css( 'display', 'none');
+                  $('#Notifications').html('<h1>Welcome</h1>').css('color', 'green'); 
+                    if(response['user']) {
+                        window.location.replace("{% url 'Agent:Agent'  %}");
+                    }
+
+                      window.location.reload();
+                    
+                   
+
+                  
+
+                  
+                     } 
+
+                  
+                
+                },
+                error: function(data) {
+                  $('.ajaxProgress').hide();
+                  $('#Notifications').html(data.message).css('color', 'red');
+                
+                }
+              });
+            });
+
+  $('#home').click(function(e) {
+   e.preventDefault();
+
+            $.ajax({
+                method: 'GET',
+                url: '{% url 'home'  %}',
+                
+                success: function (data) {
+                    
+                    $('#content').html(data)
+                },
+                error: function(data){
+                    return false;
+                }
+            });
+        });
+
+
+ $(document).ready(function()
+    {   
+        $(document).on("click", "#login", function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                method: 'GET',
+                url: '{% url 'Login'  %}',
+                
+                success: function (data) {
+                    
+                    $('#modall-content').html(data)
+                },
+                error: function(data){
+                    return false;
+                }
+            });
+        });
+    });
+
+    $(document).ready(function()
+    {   
+        $(document).on("click", "#signup", function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                method: 'GET',
+                url: '{% url 'Signup'  %}',
+                
+                success: function (data) {
+                    
+                    $('#modall-content').html(data)
+                },
+                error: function(data){
+                    return false;
+                }
+            });
+        });
+    });
+
+    
+
+</script>
+{% endif %}
+
+
+
+</div>
+</div></div>
+<br>
+
+<script src="{% static 'js/swiper.min.js' %}"></script>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+      pagination: {
+        el: '.swiper-pagination',
+      },
+    });
+  </script>
+
+{% include 'includes/_footer.html' %}
+</body>
+</html>

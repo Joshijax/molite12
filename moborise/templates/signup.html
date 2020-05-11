@@ -1,0 +1,33 @@
+<span class="close">&times;</span>
+        <h1>Join Molite Community</h1>
+            <form  id="NewUser" >
+            {% csrf_token %}
+            {% if form.errors %}
+      
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+              <p>First name</p>
+              {{ form.first_name }}
+              <p>Second name</p>
+              {{ form.last_name }}
+              <p>Username</p>
+              {{ form.username }}
+              <span id='username_error'></span>
+              <p>Email</p>
+              {{ form.email }}
+              <span id='email_error'></span>
+              <p>Password</p>
+              {{ form.password1 }}
+              <span id='password_error'></span>
+              <p>Confirm</p>
+              {{ form.password2 }}
+              <span id='message'></span>
+              <input  id="submit"  type="submit" name="submit" value="Submit">
+              <h1 id="Notifications"></h1>
+
+              <a id="login" href="" name="SignUp">Already have an Account?</a>
+            </form>

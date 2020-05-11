@@ -1,0 +1,35 @@
+
+
+
+
+        <span class="close">&times;</span>
+        
+        <h1>Login Agent</h1>
+        {% load static %}
+            <form id="LoginForm" action="{% url 'UserLogin'  %}">
+            {% csrf_token %}
+            <p>Username</p>
+              {{ form.username }}
+              <span id='usernamee_error'></span>
+              <p>Password</p>
+              {{ form.password }}
+              <span id='password_error'></span>
+          
+            
+              <span id='message'></span>
+              <input  id="Login"  type="submit" name="submit" value="Login">
+              <h1 id="Notifications"></h1>
+                <div class="ajaxProgress" style="display:none; margin-top: -30px; text-align:center; ">
+    <h3>Please Wait</h3>
+    <img src="{% static 'loading.gif' %}">
+  </div>
+</div>
+            </form>
+
+            <a href="#">Lost your password</a><br>
+				    <a href="" id="signup" name="SignUp">Don't have an account ?</a>
+
+
+
+         
+ 

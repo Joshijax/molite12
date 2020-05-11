@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOlite</title>
+    {% load static %}
+
+    <link rel="icon" href="{% static 'molite.png' %}" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
+    
+ 
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  
+
+    <!-- Latest compiled JavaScript -->
+    <script>
+
+
+
+    </script>
+    <style>
+
+    html, body {
+    scroll-behavior: smooth;
+        }
+        body {
+        background: #eee;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color:#000;
+        height: 100vh;
+        padding: 0;
+        
+        }
+        nav{
+        
+        
+        
+        background-size:cover;
+        background-width: 100px;
+        background-position: absolute;
+        font-family: Arial;
+    }
+    </style>
+
+
+
+</head>
+<body>
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+<div id="myModal" class="modall">
+      <!-- Modal content -->
+      <div style="background: #343a40;" class="modall-content" id="modall-content">
+        <span class="close">&times;</span>
+        <a id="back" style="cursor: pointer;">back</a>
+<form id="upload_Form" method="POST" action="{% url 'Agent:upload_file'  %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="frame">
+	      
+		
+
+        <div class="dropzone">
+          <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
+          {{ form.file }}
+        </div>
+        <div class="title">
+          Drop file to upload
+        </div>
+        <div style="color: #fff;" id="file_input_label"></div>
+        <p>Property Name</p>
+        {{ form.property_Name }}<br><br>
+        <p>Property Location</p>
+        {{ form.property_Location }}<br><br>
+        <p>Property Address</p>
+        {{ form.property_Address }}<br><br>
+        <p>Property Type</p>
+        {{ form.property_Type }}<br><br>
+        <p>Describe this property</p>
+        {{ form.property_Description }}<br><br>
+        <p>Property Price</p>
+          {{ form.prize }}
+          
+        <br>
+        <br>
+        <button class="btn btn-primary" type="submit" id="upload_btn" onclick="upload()">UPLOAD Property</button>
+                <br>
+               
+
+                <button class="btn btn-primary d-none" id="loading_btn" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Uploading...
+          </button>
+
+           <div style="margin-top: 20px;" id="progress" class="progress d-none">
+                  <div id="progressBar" class="progress-bar " role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                </div>
+              </form>
+
+      
+    </form>
+
+
+      </div>
+
+</div>
+</div>
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="postion: fixed !important; z-index: 12; width: 100%;">
+      <a class="navbar-brand" href="/"><img height="30" width="100" src="{% static 'molite1.jpg' %}"></a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navb">
+        <ul class="navbar-nav justify-content-center mr-auto">
+        {% if user.is_authenticated %}
+          <li><a class="nav-link" id="home" href="">Home</a></li>
+            <li><a class="nav-link" href="#">Locations</a></li>
+            <li><a class="nav-link" href="#">Vacancies</a></li>
+            <li><a class="nav-link" href="#">Info</a></li>
+            {% if request.user.profile.role == 'Agent'%}
+            <li><a class="nav-link" href="{% url 'Agent:Agent'  %}">Agent Home</a></li>
+            {% endif %}
+            <li><a class="nav-link" href="{% url 'logout'  %}">Logout</a></li>
+             
+            {% else %}
+            <li><a class="nav-link" id="home" href="">Home</a></li>
+            <li><a class="nav-link" href="#">Locations</a></li>
+            <li><a class="nav-link" href="#">Vacancies</a></li>
+            <li><a class="nav-link" href="#">Info</a></li>
+            <li><a style="cursor: pointer;" class="nav-link" id="myBtn" >Sign up or Login </a></li>
+            <li><a class="nav-link" href="#">About us</a></li>
+            {% endif %}
+        </ul>
+        <form action="/search" class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" required type="search" autocomplete="off"  name="q" aria-label="Search" placeholder="Search for vacancies...">
+          <button class="btnn" style="" type="button"><i style="color: #000; " class="fa fa-search" aria-hidden="true"></i></button>
+        </form>
+      </div>
+    </nav>
+    {% if messages %}
+
+    {% for message in messages %}
+    <div {% if message.tags %} class="alert alert-{{ message.tags }}  alert-dismissible fade show"{% endif %} role="alert">
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+
+{% endif %}
+<div class="home-container" id="content">
+
+
+    <div class="side-bar">
+        
+        <div   class="side-item" ><a href="{% url 'Agent:Agenthome'  %}" class="tablink" ><i style="font-size: 50px; position: block;" class="fa fa-user-circle-o" aria-hidden="true"></i> Home</a></div>
+        <div class="side-item"><a href="{% url 'Agent:Agentupdate'  %}" class="tablink"  ><i style="font-size: 50px;" class="fa fa-inbox" aria-hidden="true"></i>Profile</a></div>
+        <div style="background: #343a40; pointer-events: none;"  class="side-item"><a disabled href="{% url 'Agent:Agentupload'  %}" class="tablink" ><i style="font-size: 50px;" class="fa fa-cloud-upload" aria-hidden="true"></i>Listings</a></div>
+        {% comment %} <div onclick="openPage('News', this, '#343a40')" class="side-item"><a href="#" class="tablink"  ><i style="font-size: 50px;" class="fa fa-cog" aria-hidden="true"></i>Settings</a></div> {% endcomment %}
+
+        
+    </div>
+
+
+
+      <div id="Navigation" class="main-content">
+                <div class="ajaxProgress" style="display:none; position: absolute; top: 50%; left: 50%; margin: -50px 0px 0px -50px;">
+                    <img src="{% static 'ajax-loader.gif' %}" >
+                </div>
+                <div id="Navigation_content">
+                    <div class="row">
+    {% for property in tests %}
+
+                <div class="col-lg-3 col-md-3 col-sm-6">
+                                    <div  class="card mb-4">
+                                        <a  href="{% url 'view_property' property.id property.username %}">
+                                            <div class="card-img-top"
+                                                ><img src="{{property.file.url}}" style=" height:150px;width:100% "></div>
+                                        
+                                        <div  class="card-body">
+                                            <span  id="view{{ property.id }}"  style="text-size:10px; color: black;"><span style='font-weight: 20px;'>Location: </span>{{property.property_Location}}
+                                            <br>
+                                            <span style='font-weight: 20px;'>Property Name: </span>{{property.property_Name}}</span></a>
+                                            <br>
+                                            <span class="text-warning">Not verified</span>
+                                            
+                                        </div>
+                                    </div>
+                                    <!-- /.card -->
+                        
+                </div>                
+
+    
+
+
+              {% endfor %}
+              </div>
+    
+                </div>
+        </div>
+        <br>
+
+       
+      
+      </div>
+
+<script>
+$("#myBtnn").click(function(){
+      $('#myModal').show()
+  
+});
+
+
+
+$(".close").click(function(){
+      $('#myModal').hide()
+  
+});
+
+
+$(window).click(function(e) {
+    var target = $( event.target );
+    if ( target.is( "#myModal" ) ) {
+    $('#myModal').hide();
+  }
+
+});
+
+
+
+</script>
+
+
+<script src="{% static 'scripts.js' %}"></script>
+<script>
+var input = document.getElementById("id_file");
+var file_input_label = document.getElementById("file_input_label");
+
+
+function input_filename() {
+
+  file_input_label.innerText = input.files[0].name;
+
+
+}
+</script>
+
+
+
+
+  </body>
+  </html>
+
+
+
