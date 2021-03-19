@@ -10,7 +10,7 @@ django-ajax-selects==1.8.0
 django-crispy-forms==1.8.0
 django-jsonfield==1.4.0
 django-widget-tweaks==1.4.5
-djangorestframework==3.10.3
+djangorestframework==3.11.2
 Flask==1.1.1
 idna==2.8
 imageio==2.6.1
