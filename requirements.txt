@@ -21,7 +21,7 @@ MarkupSafe==1.1.1
 moviepy==1.0.1
 mysql-connector-python==8.0.19
 mysqlclient==1.4.5
-numpy==1.18.1
+numpy==1.22.0
 Pillow==7.0.0
 proglog==0.1.9
 pycparser==2.20
